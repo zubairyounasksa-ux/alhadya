@@ -537,6 +537,29 @@
   .logo-reset-btn:hover { background: #F3E9D6; }
   .logo-upload-btn input { display: none; }
 
+  .control-divider {
+    width: 1px;
+    min-height: 30px;
+    background: var(--border-gold);
+    margin: 0 2px;
+  }
+  .signature-image {
+    display: none;
+    width: auto;
+    max-width: 190px;
+    max-height: 72px;
+    object-fit: contain;
+    margin-bottom: 8px;
+    mix-blend-mode: multiply;
+  }
+  .signature-image.has-image { display: block; }
+  .sig-block:last-child .signature-image {
+    margin-left: auto;
+  }
+  .signature-placeholder-space {
+    min-height: 0;
+  }
+
   /* ── HEADER LOGO PLACEMENT ── */
   .header-logo-slot {
     position: relative;
@@ -604,8 +627,8 @@
 
 <div class="logo-control-bar no-export">
   <div>
-    <div class="logo-control-title">Header Logo Upload</div>
-    <span class="logo-control-hint">Upload transparent PNG logos for best result. Logos are saved in this browser.</span>
+    <div class="logo-control-title">Brand &amp; Signature Upload</div>
+    <span class="logo-control-hint">Upload transparent PNG images for best result. Logos and signatures are saved in this browser.</span>
   </div>
   <div class="logo-control-actions">
     <label class="logo-upload-btn">
@@ -617,6 +640,16 @@
       <input id="hidayahLogoInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
     </label>
     <button class="logo-reset-btn" type="button" onclick="resetHeaderLogos()">Reset Logos</button>
+    <span class="control-divider" aria-hidden="true"></span>
+    <label class="logo-upload-btn">
+      Upload Left Signature
+      <input id="leftSignatureInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+    </label>
+    <label class="logo-upload-btn">
+      Upload Right Signature
+      <input id="rightSignatureInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+    </label>
+    <button class="logo-reset-btn" type="button" onclick="resetDigitalSignatures()">Reset Signatures</button>
   </div>
 </div>
 
@@ -686,12 +719,14 @@
 
       <div class="sig-area">
         <div class="sig-block">
+          <img id="leftSignaturePreview" class="signature-image" alt="Left Digital Signature">
           <div class="sig-line"></div>
           <div class="sig-name">Dr. Mufti Muhammad Akhlaq</div>
           <div class="sig-role">Shariah Advisor, Al-Hidayah</div>
           <div class="sig-role" style="margin-top:2px;">PhD (Islamic Finance) · Takhassus fil Ifta · Jamia Darul Uloom Karachi</div>
         </div>
         <div class="sig-block" style="text-align:right;">
+          <img id="rightSignaturePreview" class="signature-image" alt="Right Digital Signature">
           <div class="sig-line" style="margin-left:auto;"></div>
           <div class="sig-name">Youngs Capital</div>
           <div class="sig-role">Management — Al-Hidayah Division</div>
@@ -796,7 +831,19 @@
 <script>
   const headerLogoDefaults = {};
 
-  function readLogoFile(input, imageId, storageKey) {
+  function setImageSource(imageId, dataUrl, visibleClass) {
+    const img = document.getElementById(imageId);
+    if (!img) return;
+    if (dataUrl) {
+      img.src = dataUrl;
+      if (visibleClass) img.classList.add(visibleClass);
+    } else {
+      img.removeAttribute('src');
+      if (visibleClass) img.classList.remove(visibleClass);
+    }
+  }
+
+  function readImageFile(input, imageId, storageKey, visibleClass) {
     const file = input.files && input.files[0];
     if (!file) return;
     if (!file.type.startsWith('image/')) {
@@ -808,12 +855,11 @@
     const reader = new FileReader();
     reader.onload = function(event) {
       const dataUrl = event.target.result;
-      const img = document.getElementById(imageId);
-      img.src = dataUrl;
+      setImageSource(imageId, dataUrl, visibleClass);
       try {
         localStorage.setItem(storageKey, dataUrl);
       } catch (err) {
-        console.warn('Logo saved for this session, but localStorage is full or blocked.', err);
+        console.warn('Image saved for this session, but localStorage is full or blocked.', err);
       }
     };
     reader.readAsDataURL(file);
@@ -830,6 +876,15 @@
     document.getElementById('hidayahLogoInput').value = '';
   }
 
+  function resetDigitalSignatures() {
+    setImageSource('leftSignaturePreview', '', 'has-image');
+    setImageSource('rightSignaturePreview', '', 'has-image');
+    localStorage.removeItem('leftDigitalSignature');
+    localStorage.removeItem('rightDigitalSignature');
+    document.getElementById('leftSignatureInput').value = '';
+    document.getElementById('rightSignatureInput').value = '';
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     const yc = document.getElementById('ycLogoPreview');
     const hidayah = document.getElementById('hidayahLogoPreview');
@@ -838,14 +893,25 @@
 
     const savedYcLogo = localStorage.getItem('ycHeaderLogo');
     const savedHidayahLogo = localStorage.getItem('hidayahHeaderLogo');
+    const savedLeftSignature = localStorage.getItem('leftDigitalSignature');
+    const savedRightSignature = localStorage.getItem('rightDigitalSignature');
+
     if (savedYcLogo) yc.src = savedYcLogo;
     if (savedHidayahLogo) hidayah.src = savedHidayahLogo;
+    if (savedLeftSignature) setImageSource('leftSignaturePreview', savedLeftSignature, 'has-image');
+    if (savedRightSignature) setImageSource('rightSignaturePreview', savedRightSignature, 'has-image');
 
     document.getElementById('ycLogoInput').addEventListener('change', function() {
-      readLogoFile(this, 'ycLogoPreview', 'ycHeaderLogo');
+      readImageFile(this, 'ycLogoPreview', 'ycHeaderLogo');
     });
     document.getElementById('hidayahLogoInput').addEventListener('change', function() {
-      readLogoFile(this, 'hidayahLogoPreview', 'hidayahHeaderLogo');
+      readImageFile(this, 'hidayahLogoPreview', 'hidayahHeaderLogo');
+    });
+    document.getElementById('leftSignatureInput').addEventListener('change', function() {
+      readImageFile(this, 'leftSignaturePreview', 'leftDigitalSignature', 'has-image');
+    });
+    document.getElementById('rightSignatureInput').addEventListener('change', function() {
+      readImageFile(this, 'rightSignaturePreview', 'rightDigitalSignature', 'has-image');
     });
   });
 
@@ -974,6 +1040,7 @@
 
   async function ensureExportAssetsReady(root = document) {
     const imagePromises = Array.from(root.querySelectorAll('img')).map(img => {
+      if (!img.getAttribute('src')) return Promise.resolve();
       if (img.complete && img.naturalWidth !== 0) return Promise.resolve();
       return new Promise(resolve => {
         img.onload = resolve;
