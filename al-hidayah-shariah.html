@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Hidayah – Shariah Document | Youngs Capital</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #B8975A;
+    --gold-light: #D4B47A;
+    --dark-green: #1A3A2A;
+    --mid-green: #2C5F3F;
+    --light-green: #3D7A52;
+    --cream: #FAF7F0;
+    --warm-white: #FFFDF8;
+    --text-dark: #1C1C1C;
+    --text-mid: #3A3A3A;
+    --text-soft: #6B6B5A;
+    --border-gold: rgba(184,151,90,0.35);
+    --border-green: rgba(44,95,63,0.2);
+    --shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: linear-gradient(135deg, #0F2318 0%, #1A3A2A 40%, #0F2318 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+  }
+
+  /* ── DOCUMENT WRAPPER ── */
+  .document-wrapper {
+    width: 100%;
+    max-width: 820px;
+  }
+
+  /* ── OUTER CARD ── */
+  .card {
+    background: var(--warm-white);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow), 0 0 0 1px var(--border-gold);
+    position: relative;
+  }
+
+  /* Gold corner accents */
+  .card::before, .card::after {
+    content: '';
+    position: absolute;
+    width: 60px; height: 60px;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .card::before {
+    top: 0; left: 0;
+    border-top: 3px solid var(--gold);
+    border-left: 3px solid var(--gold);
+  }
+  .card::after {
+    bottom: 0; right: 0;
+    border-bottom: 3px solid var(--gold);
+    border-right: 3px solid var(--gold);
+  }
+
+  /* ── HEADER BAND ── */
+  .header-band {
+    background: linear-gradient(135deg, var(--dark-green) 0%, var(--mid-green) 60%, var(--light-green) 100%);
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-band::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  }
+
+  /* Islamic geometric watermark */
+  .header-band::before {
+    content: '✦';
+    position: absolute;
+    right: 180px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 120px;
+    color: rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-img {
+    height: 56px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.92;
+  }
+  .logo-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .alhidayah-logo {
+    height: 52px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  /* ── BISMILLAH STRIP ── */
+  .bismillah-strip {
+    background: linear-gradient(90deg, var(--cream), #F5EFE0, var(--cream));
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 22px;
+    color: var(--dark-green);
+    letter-spacing: 4px;
+    border-bottom: 1px solid var(--border-gold);
+  }
+
+  /* ── TABS ── */
+  .tabs-row {
+    display: flex;
+    background: var(--cream);
+    border-bottom: 2px solid var(--border-gold);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 16px 10px;
+    background: none;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.25s;
+  }
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 20%; right: 20%;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .tab-btn.active {
+    color: var(--dark-green);
+  }
+  .tab-btn.active::after { opacity: 1; }
+  .tab-btn:hover:not(.active) { color: var(--mid-green); }
+
+  /* ── CONTENT PANELS ── */
+  .panel { display: none; padding: 44px 50px 48px; }
+  .panel.active { display: block; }
+
+  /* ── DECORATION LINE ── */
+  .deco-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .deco-line span {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .deco-line span:last-child {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .deco-line em {
+    font-style: normal;
+    font-size: 18px;
+    color: var(--gold);
+  }
+
+  /* ── DOC TITLE ── */
+  .doc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--dark-green);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .doc-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-soft);
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  /* ── BODY TEXT ── */
+  .doc-body p {
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: var(--text-mid);
+    margin-bottom: 18px;
+    text-align: justify;
+    font-weight: 400;
+  }
+  .doc-body p:last-child { margin-bottom: 0; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(44,95,63,0.06), rgba(184,151,90,0.08));
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 18px 22px;
+    margin: 24px 0;
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+  .highlight-box strong {
+    color: var(--dark-green);
+    font-weight: 600;
+  }
+
+  /* ── BULLET LIST ── */
+  .shariah-list {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+  }
+  .shariah-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+  }
+  .shariah-list li::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 9px;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* ── TERMS SECTIONS ── */
+  .terms-section {
+    margin-bottom: 30px;
+    padding-bottom: 24px;
+    border-bottom: 1px dashed var(--border-gold);
+  }
+  .terms-section:last-of-type { border-bottom: none; }
+  .terms-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--dark-green);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .terms-section h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 18px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .terms-section p, .terms-section li {
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--text-mid);
+  }
+  .terms-section ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 8px;
+  }
+  .terms-section ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .terms-section ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ── SIGNATURE AREA ── */
+  .sig-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 44px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border-gold);
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .sig-block { flex: 1; min-width: 180px; }
+  .sig-line {
+    height: 1px;
+    background: var(--text-dark);
+    margin-bottom: 6px;
+    width: 80%;
+  }
+  .sig-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--dark-green);
+  }
+  .sig-role {
+    font-size: 11.5px;
+    color: var(--text-soft);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  .dua-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-soft);
+    text-align: center;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-gold);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER BAND ── */
+  .footer-band {
+    background: var(--dark-green);
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer-band span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1px;
+  }
+  .footer-gold { color: var(--gold-light) !important; }
+
+  /* ── DOWNLOAD BUTTONS ── */
+  .download-bar {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 28px;
+    border-radius: 3px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .dl-btn-pdf {
+    background: linear-gradient(135deg, var(--dark-green), var(--mid-green));
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(44,95,63,0.35);
+  }
+  .dl-btn-pdf:hover { box-shadow: 0 6px 22px rgba(44,95,63,0.5); transform: translateY(-1px); }
+  .dl-btn-jpg {
+    background: linear-gradient(135deg, #8A6E3A, var(--gold));
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(184,151,90,0.35);
+  }
+  .dl-btn-jpg:hover { box-shadow: 0 6px 22px rgba(184,151,90,0.5); transform: translateY(-1px); }
+  .dl-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .download-bar { display: none; }
+    .tabs-row { display: none; }
+    .panel { display: block !important; page-break-after: always; }
+  }
+
+  @media (max-width: 600px) {
+    .panel { padding: 28px 22px 32px; }
+    .header-band { padding: 20px 22px; flex-wrap: wrap; gap: 14px; }
+    .doc-title { font-size: 24px; }
+    .sig-area { flex-direction: column; }
+    .footer-band { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="document-wrapper">
+  <div class="card">
+
+    <!-- HEADER -->
+    <div class="header-band">
+      <div class="logo-area">
+        <img class="logo-img" src="data:image/jpeg;base64,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" alt="Youngs Capital">
+        <div>
+          <div style="font-family:'Raleway',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:1px;">Youngs Capital</div>
+          <div class="logo-text">Financial Consultant</div>
+        </div>
+      </div>
+      <img class="alhidayah-logo" src="data:image/jpeg;base64,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" alt="Al-Hidayah">
+    </div>
+
+    <!-- BISMILLAH -->
+    <div class="bismillah-strip">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+
+    <!-- TABS -->
+    <div class="tabs-row">
+      <button class="tab-btn active" onclick="switchTab('certification', this)">Shariah Certification</button>
+      <button class="tab-btn" onclick="switchTab('terms', this)">Terms &amp; Conditions</button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         TAB 1: SHARIAH CERTIFICATION
+    ══════════════════════════════════════════════ -->
+    <div id="panel-certification" class="panel active">
+      <div class="deco-line"><span></span><em>✦</em><span></span></div>
+
+      <div class="doc-title">Shariah Certification</div>
+      <div class="doc-subtitle">Al-Hidayah — Shariah-Compliant Investment Framework</div>
+
+      <div class="doc-body">
+        <p>
+          Alhamdulillah, <strong>Youngs Capital</strong>, a SECP-registered financial consultancy, offers its Shariah-focused framework and service line under the name <strong>Al-Hidayah (الهدايه)</strong>. Al-Hidayah is built from the ground up to serve clients who seek to align their investments with Islamic principles, placing Shariah considerations at the centre of every decision rather than treating them as an afterthought.
+        </p>
+
+        <div class="highlight-box">
+          <strong>Seeking a Halal livelihood</strong> is not only a religious obligation but also a profound act of worship. When wealth is managed with integrity and its due rights are fulfilled, it becomes a shield for one's faith and values.
+        </div>
+
+        <p>
+          Al-Hidayah is not merely a label placed upon a conventional experience. It carries its own orientation, guidelines, and customer journey — ensuring that every product, communication, and service rendered through this framework is genuinely Shariah-conscious.
+        </p>
+
+        <p>Within Al-Hidayah, the following measures are consistently applied:</p>
+
+        <ul class="shariah-list">
+          <li>Rigorous Shariah screening is applied to all eligible securities before inclusion in any portfolio or recommendation.</li>
+          <li>Business activities are evaluated to exclude those involving prohibited industries such as conventional banking, alcohol, gambling, tobacco, and related sectors.</li>
+          <li>Financial ratios — including leverage, revenue purity, and receivables — are monitored to ensure ongoing compliance with accepted Shariah thresholds.</li>
+          <li>Listed securities are assessed using the following criteria: non-Shariah-compliant revenue must remain below 5%, total debt to total assets below 37%, and purification of impermissible income must be performed where applicable.</li>
+          <li>Structured lists, tools, and communications are maintained specifically for Shariah-conscious investors, with dedicated support separate from conventional advisory flows.</li>
+        </ul>
+
+        <p>
+          Based upon the above framework and the ongoing supervision of our appointed Shariah Advisor, we hereby certify that the Al-Hidayah service line offered by Youngs Capital is conducted in accordance with the principles of Islamic Shariah (Jurisprudence). Al-Hidayah does not eliminate investment risk, but it provides those who care about Shariah compliance a clearly defined and intentional pathway to Halal wealth management.
+        </p>
+
+        <p>
+          May Allah grant us tawfeeq to fulfil our obligations with sincerity and excellence, and may He accept these efforts in His cause. <em>Ameen.</em>
+        </p>
+      </div>
+
+      <div class="sig-area">
+        <div class="sig-block">
+          <div class="sig-line"></div>
+          <div class="sig-name">Dr. Mufti Muhammad Akhlaq</div>
+          <div class="sig-role">Shariah Advisor, Al-Hidayah</div>
+          <div class="sig-role" style="margin-top:2px;">PhD (Islamic Finance) · Takhassus fil Ifta · Jamia Darul Uloom Karachi</div>
+        </div>
+        <div class="sig-block" style="text-align:right;">
+          <div class="sig-line" style="margin-left:auto;"></div>
+          <div class="sig-name">Youngs Capital</div>
+          <div class="sig-role">Management — Al-Hidayah Division</div>
+          <div class="sig-role" style="margin-top:2px;">SECP Registered · www.youngscapital.pk</div>
+        </div>
+      </div>
+
+      <div class="dua-text">
+        "Allah knows best." — Wa Allahu A'lam
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         TAB 2: TERMS & CONDITIONS
+    ══════════════════════════════════════════════ -->
+    <div id="panel-terms" class="panel">
+      <div class="deco-line"><span></span><em>✦</em><span></span></div>
+
+      <div class="doc-title">Terms &amp; Conditions</div>
+      <div class="doc-subtitle">Al-Hidayah Shariah-Compliant Investment Service</div>
+
+      <div class="doc-body">
+
+        <div class="terms-section">
+          <h3>1. Eligibility &amp; Screening Criteria</h3>
+          <p>For a company's shares to be eligible for inclusion within the Al-Hidayah framework, the following conditions must be satisfied:</p>
+          <ul>
+            <li>The primary business of the company must be Halal — companies engaged in conventional banking, insurance (non-Takaful), alcohol, tobacco, gambling, or any Haram trade are excluded.</li>
+            <li>Non-Shariah-compliant revenue must constitute less than <strong>5%</strong> of total annual income.</li>
+            <li>Total interest-bearing debt must remain below <strong>37%</strong> of total assets.</li>
+            <li>Purification (Tazkiyah) of any residual impermissible income is mandatory before distribution or reinvestment.</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h3>2. Purchase &amp; Sale of Shares — Shariah Conditions</h3>
+          <p>All transactions conducted under Al-Hidayah must comply with the following Shariah conditions:</p>
+          <ul>
+            <li><strong>Valid Object (Mahalliyat):</strong> The shares must represent a Halal asset and carry a market price.</li>
+            <li><strong>Ownership &amp; Existence:</strong> The shares must exist and be in the ownership of the seller at the time of sale.</li>
+            <li><strong>Possession (Qabdah):</strong> Shares must be in actual or constructive possession. In Pakistan, this is achieved through the T+1 settlement cycle.</li>
+            <li><strong>Delivery Assurance:</strong> The seller must have the capacity to deliver the shares; speculative sales of non-existent assets are not permitted.</li>
+            <li><strong>Absence of Gharar:</strong> All material terms — price, quantity, delivery time — must be clearly established at the point of agreement. Uncertainty rendering the contract void is impermissible.</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h3>3. Prohibited Trading Practices</h3>
+          <p>The following practices are strictly prohibited under Al-Hidayah guidelines and are not available to clients of this service line:</p>
+          <ul>
+            <li><strong>Forward Sale (Bai' Salam):</strong> The sale of shares on forward-fixing or futures contracts with interest-based settlement is not permitted.</li>
+            <li><strong>Short Sale &amp; Blank Sale:</strong> Selling shares one does not own (short sale or blank sale) is impermissible, as it constitutes a sale of a non-existent asset.</li>
+            <li><strong>Option Sale:</strong> Call options, put options, and compound derivatives are not available, as they involve rights that are not tradeable in Shariah without genuine ownership.</li>
+            <li><strong>Leverage (Margin Trading):</strong> Leveraged trading and margin financing carry an element of Riba (interest) in the loan and are therefore excluded from this framework.</li>
+            <li><strong>Repo Transactions:</strong> Sale and repurchase agreements (REPO) involve a loan with an additional benefit and are not Shariah-compliant.</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h3>4. Purification (Tazkiyah) Obligation</h3>
+          <p>Where a Shariah-screened company generates any residual non-compliant income (below the 5% threshold), the proportionate amount must be purified by the investor via charitable giving (Sadaqah) without expectation of reward. Youngs Capital — Al-Hidayah will notify clients of the applicable purification ratio periodically.</p>
+        </div>
+
+        <div class="terms-section">
+          <h3>5. General Disclaimer &amp; Risk Disclosure</h3>
+          <p>
+            Shariah compliance does not eliminate investment risk. Markets are subject to price fluctuation, and past performance is not indicative of future results. Al-Hidayah provides a Shariah-structured framework; it does not guarantee returns. All investment decisions remain the responsibility of the investor.
+          </p>
+          <p style="margin-top:10px;">
+            This document is issued under the authority and supervision of <strong>Dr. Mufti Muhammad Akhlaq</strong> (PhD, Shariah Advisor). Youngs Capital is registered with the Securities &amp; Exchange Commission of Pakistan (SECP). All matters of Shariah interpretation are subject to the final ruling of the appointed Shariah Advisor.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-band">
+      <span>© Youngs Capital · SECP Registered · www.youngscapital.pk</span>
+      <span class="footer-gold">الهدايه · Al-Hidayah — Shariah-First</span>
+    </div>
+
+  </div><!-- .card -->
+
+  <!-- DOWNLOAD BUTTONS -->
+  <div class="download-bar">
+    <button class="dl-btn dl-btn-pdf" onclick="downloadPDF()">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6C4.9 2 4 2.9 4 4v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 16h8v1H8v-1zm0-2h8v1H8v-1zm0-2h5v1H8v-1z"/></svg>
+      Download as PDF
+    </button>
+    <button class="dl-btn dl-btn-jpg" onclick="downloadJPEG()">
+      <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+      Download as JPEG
+    </button>
+  </div>
+
+</div><!-- .document-wrapper -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const card = document.querySelector('.card');
+    // Temporarily show both panels for capture
+    const panels = document.querySelectorAll('.panel');
+    const tabsRow = document.querySelector('.tabs-row');
+
+    // Show all panels stacked
+    panels.forEach(p => {
+      p.style.display = 'block';
+      p.style.borderTop = '2px dashed #B8975A';
+    });
+    tabsRow.style.display = 'none';
+
+    const canvas = await html2canvas(card, { scale: 2, useCORS: true, backgroundColor: '#FFFDF8' });
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const ratio = canvas.height / canvas.width;
+    const imgW = pageW - 20;
+    const imgH = imgW * ratio;
+
+    let yPos = 10;
+    let remaining = imgH;
+    const pageContentH = pageH - 20;
+
+    if (imgH <= pageContentH) {
+      pdf.addImage(imgData, 'JPEG', 10, yPos, imgW, imgH);
+    } else {
+      let page = 0;
+      while (remaining > 0) {
+        if (page > 0) pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 10, yPos - page * pageContentH, imgW, imgH);
+        remaining -= pageContentH;
+        page++;
+      }
+    }
+
+    // Restore
+    panels.forEach((p, i) => {
+      p.style.display = i === 0 ? 'block' : 'none';
+      p.style.borderTop = '';
+    });
+    panels[0].classList.add('active');
+    tabsRow.style.display = '';
+
+    pdf.save('AlHidayah-Shariah-Document.pdf');
+  }
+
+  async function downloadJPEG() {
+    const card = document.querySelector('.card');
+    const panels = document.querySelectorAll('.panel');
+    const tabsRow = document.querySelector('.tabs-row');
+
+    panels.forEach(p => {
+      p.style.display = 'block';
+      p.style.borderTop = '2px dashed #B8975A';
+    });
+    tabsRow.style.display = 'none';
+
+    const canvas = await html2canvas(card, { scale: 2, useCORS: true, backgroundColor: '#FFFDF8' });
+    const link = document.createElement('a');
+    link.download = 'AlHidayah-Shariah-Document.jpg';
+    link.href = canvas.toDataURL('image/jpeg', 0.95);
+    link.click();
+
+    panels.forEach((p, i) => {
+      p.style.display = i === 0 ? 'block' : 'none';
+      p.style.borderTop = '';
+    });
+    panels[0].classList.add('active');
+    tabsRow.style.display = '';
+  }
+</script>
+
+</body>
+</html>
